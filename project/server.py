@@ -12,6 +12,7 @@ def base_service_error_handler(exception: BaseServiceError):
 
 
 def create_app(config_obj):
+    # вручную указываем расположение папок templates и static
     app = Flask(__name__, template_folder="../templates", static_folder="../static")
     app.config.from_object(config_obj)
 

@@ -3,10 +3,10 @@ from .main import genres_ns, directors_ns, movies_ns
 
 __all__ = [
     "auth_ns",
+    "user_ns",
     "genres_ns",
     "directors_ns",
-    "movies_ns",
-    "user_ns",
-]
+    "movies_ns"
+    ]
 
 

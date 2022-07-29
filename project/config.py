@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class BaseConfig:
-    SECRET_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = os.getenv("LondonIsTheCapitalOfGreatBritan")
     ALGORITHM = 'HS256'
     JSON_AS_ASCII = False
 

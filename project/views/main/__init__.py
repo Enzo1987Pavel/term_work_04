@@ -6,4 +6,4 @@ __all__ = [
     "genres_ns",
     "directors_ns",
     "movies_ns"
-]
+    ]
