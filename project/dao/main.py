@@ -43,7 +43,7 @@ class UsersDAO(BaseDAO[User]):
                 )
             )
             self._db_session.commit()
-            print("Пользователь добавлен")
+            print("Пользователь успешно добавлен")
         except Exception as e:
             print(e)
             self._db_session.rollback()
@@ -62,7 +62,7 @@ class UsersDAO(BaseDAO[User]):
                 data
             )
             self._db_session.commit()
-            print("Пользователь обновлен")
+            print("Данные пользователя обновлены")
         except Exception as e:
             print(e)
             self._db_session.rollback()  # Отмена последних изменений, внесенных в базу данных

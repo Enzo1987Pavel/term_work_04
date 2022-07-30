@@ -26,7 +26,7 @@ class UsersService:
 
     def check(self, login, password):
         user = self.get_user_by_login(login)
-        return generate_tokens(email=user.email, password=password, password_hash=user.password)
+        return generate_tokens(email=user.email, password=password)
 
     def update_token(self, refresh_token):
         return approve_refresh_token(refresh_token)
@@ -46,6 +46,5 @@ class UsersService:
     def update_password(self, data, refresh_token):
         user = self.get_user_by_token(refresh_token)
         if user:
-
-            self.dao.update(login=user.email, data={"password": generate_password_hash(data.get('password_2'))})
-            return self.check(login=user.email, password=data.get('password_2'))
+            self.dao.update(login=user.email, data={"password": generate_password_hash(data.get("password_2"))})
+            return self.check(login=user.email, password=data.get("password_2"))

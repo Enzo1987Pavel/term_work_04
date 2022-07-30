@@ -7,8 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class BaseConfig:
-    SECRET_KEY = os.getenv("LondonIsTheCapitalOfGreatBritan")
-    ALGORITHM = 'HS256'
+    SECRET_KEY = "LondonIsTheCapitalOfGreatBritan"
+    ALGORITHM = "HS256"
     JSON_AS_ASCII = False
 
     ITEMS_PER_PAGE = 12

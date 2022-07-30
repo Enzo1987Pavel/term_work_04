@@ -3,7 +3,6 @@ import hashlib
 
 import calendar
 import datetime
-from os import abort
 
 import jwt
 
@@ -20,36 +19,27 @@ def __generate_password_digest(password: str) -> bytes:
 
 
 def generate_password_hash(password: str) -> str:
-	return base64.b64encode(__generate_password_digest(password)).decode('utf-8')
-
-# compose_passwords
+	return base64.b64encode(__generate_password_digest(password)).decode("utf-8")
 
 
 def compare_passwords_hash(password_hash, other_password) -> bool:
 	"""
-	Метод возвращает сравнение бинарных последовательностей чисел(из базы данных 'password_hash'
-	и сгенерированный 'other_password'), возвращает либо True либо False
-	 """
+	Сравниваем последовательности чисел (из базы данных 'password_hash'
+	и сгенерированный 'other_password')
+	"""
 	return password_hash == generate_password_hash(other_password)
 
 
-def generate_tokens(email, password, password_hash=None, is_refresh=False):
+def generate_tokens(email, password):
 	"""
-	Метод, который генерирует access_token и refresh_token, получая email и пароль пользователя
-	с проверкой is_refresh (создание новых токенов, а не генерирование refresh_token)
+	Создаем access_token и refresh_token, получая email и пароль пользователя
 	"""
-
-	# if email is None:
-	# 	raise abort()
-	#
-	# if not is_refresh:
-	# 	if not compare_passwords_hash(password, password_hash):
-	# 		raise abort()
 
 	data = {
 		"email": email,
 		"password": password
 	}
+
 	# 15 min for access_token
 	min15 = datetime.datetime.utcnow() + datetime.timedelta(minutes=current_app.config["TOKEN_EXPIRE_MINUTES"])
 	data["exp"] = calendar.timegm(min15.timetuple())
@@ -69,13 +59,12 @@ def generate_tokens(email, password, password_hash=None, is_refresh=False):
 def approve_refresh_token(refresh_token):
 	"""
 	Получаем информацию о пользователе, извлекает значение 'email' и 'password'.
-	 Если токен обновлен 'refresh_token = True', то генерируем новый токен
 	"""
 	data = jwt.decode(jwt=refresh_token, key=current_app.config["SECRET_KEY"], algorithms=[current_app.config["ALGORITHM"]])
 	email = data.get("email")
 	password = data.get("password")
 
-	return generate_tokens(email, password, is_refresh=True)
+	return generate_tokens(email, password)
 
 
 def get_data_from_token(refresh_token):
