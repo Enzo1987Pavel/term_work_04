@@ -26,7 +26,7 @@ class UsersService:
 
     def check(self, login, password):
         user = self.get_user_by_login(login)
-        return generate_tokens(email=user.email, password=password)
+        return generate_tokens(email=user.email, password=password, password_hash=user.password)
 
     def update_token(self, refresh_token):
         return approve_refresh_token(refresh_token)

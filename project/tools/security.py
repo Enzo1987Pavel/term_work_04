@@ -30,10 +30,14 @@ def compare_passwords_hash(password_hash, other_password) -> bool:
 	return password_hash == generate_password_hash(other_password)
 
 
-def generate_tokens(email, password):
+def generate_tokens(email, password, password_hash=None, is_updated=False):
 	"""
 	Создаем access_token и refresh_token, получая email и пароль пользователя
 	"""
+
+	if not is_updated:
+		if not compare_passwords_hash(other_password=password, password_hash=password_hash):
+			return None
 
 	data = {
 		"email": email,
@@ -64,7 +68,7 @@ def approve_refresh_token(refresh_token):
 	email = data.get("email")
 	password = data.get("password")
 
-	return generate_tokens(email, password)
+	return generate_tokens(email, password, is_updated=True)
 
 
 def get_data_from_token(refresh_token):
